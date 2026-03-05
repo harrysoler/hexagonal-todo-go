@@ -19,6 +19,10 @@ func NewProjectService(repository repository.ProjectRepository) ProjectService {
 	}
 }
 
+func (service ProjectService) Projects(ctx context.Context) ([]entity.Project, error) {
+	return service.repository.Projects(ctx)
+}
+
 func (service ProjectService) CreateProject(ctx context.Context, request entity.CreateProjectRequest) error {
 	isProjectDuplicated, err := service.repository.IsProjectDuplicated(ctx, request.Name)
 
