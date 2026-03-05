@@ -27,6 +27,10 @@ func NewProject(id ProjectId, name ProjectName, todos []Todo) (Project, error) {
 	}, nil
 }
 
+func (project Project) Name() ProjectName {
+	return project.name
+}
+
 type CreateProjectRequest struct {
 	Name  ProjectName
 	Todos []CreateTodoRequest
