@@ -30,22 +30,7 @@ func (service ProjectService) CreateProject(ctx context.Context, request entity.
 		return fmt.Errorf("create project (name %s): %w", request.Name, entity.ErrProjectAlreadyExist)
 	}
 
-	todos := make([]entity.Todo, len(request.Todos))
-
-	for index := range todos {
-		id := generateTodoId()
-		todo, err := request.Todos[index].ToEntity(id)
-
-		if err != nil {
-			return fmt.Errorf("create todo: %w", err)
-		}
-
-		todos[index] = todo
-	}
-
-	id := generateProjectId()
-
-	project, err := entity.NewProject(id, request.Name, todos)
+	project, err := request.ToEntity(generateProjectId(), generateTodoId)
 
 	if err != nil {
 		return fmt.Errorf("create project: %w", err)

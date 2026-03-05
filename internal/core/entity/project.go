@@ -1,6 +1,9 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 var (
 	ErrProjectAlreadyExist = errors.New("project already exist")
@@ -27,4 +30,20 @@ func NewProject(id ProjectId, name ProjectName, todos []Todo) (Project, error) {
 type CreateProjectRequest struct {
 	Name  ProjectName
 	Todos []CreateTodoRequest
+}
+
+func (request CreateProjectRequest) ToEntity(id ProjectId, generateTodoId func() TodoId) (Project, error) {
+	todos := make([]Todo, len(request.Todos))
+
+	for index, todoRequest := range request.Todos {
+		todo, err := todoRequest.ToEntity(generateTodoId())
+
+		if err != nil {
+			return Project{}, fmt.Errorf("create todo: %w", err)
+		}
+
+		todos[index] = todo
+	}
+
+	return NewProject(id, request.Name, todos)
 }
