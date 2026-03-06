@@ -15,6 +15,10 @@ func NewTodo(id TodoId, name TodoName) (Todo, error) {
 	}, nil
 }
 
+func (todo Todo) Name() TodoName {
+	return todo.name
+}
+
 type CreateTodoRequest struct {
 	Name TodoName
 }

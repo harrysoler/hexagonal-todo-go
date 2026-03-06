@@ -31,6 +31,10 @@ func (project Project) Name() ProjectName {
 	return project.name
 }
 
+func (project Project) Todos() []Todo {
+	return project.todos
+}
+
 type CreateProjectRequest struct {
 	Name  ProjectName
 	Todos []CreateTodoRequest
