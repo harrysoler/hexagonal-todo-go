@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"log/slog"
 	"os"
 
 	"dev.harrysoler/todoweb/internal/adapter/api/htmx"
 	"dev.harrysoler/todoweb/internal/adapter/repository/inmemory"
+	"dev.harrysoler/todoweb/internal/adapter/repository/seeder"
 	"dev.harrysoler/todoweb/internal/core/service"
 	"gitlab.com/greyxor/slogor"
 )
@@ -23,9 +25,15 @@ func main() {
 
 	service := service.NewProjectService(repository)
 
+	err := seeder.SeedProjects(context.Background(), service)
+
+	if err != nil {
+		panic(err)
+	}
+
 	api := htmx.NewHtmxApi(service)
 
-	err := api.RunServer(logger)
+	err = api.RunServer(logger)
 
 	if err != nil {
 		panic(err)
