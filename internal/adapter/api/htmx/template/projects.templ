@@ -1,0 +1,23 @@
+package template
+
+import "dev.harrysoler/todoweb/internal/core/entity"
+
+templ ProjectsPage(projects []entity.Project) {
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Projects</title>
+    </head>
+    <body>
+      <h1>Projects</h1>
+      <ul>
+        for _, project := range projects {
+          <li>
+            { project.Name() }
+          </li>
+        }
+      </ul>
+    </body>
+    
+  </html>
+}
