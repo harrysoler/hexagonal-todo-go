@@ -16,9 +16,9 @@ func NewTodo(id TodoId, name TodoName) (Todo, error) {
 }
 
 type CreateTodoRequest struct {
-	name TodoName
+	Name TodoName
 }
 
 func (request CreateTodoRequest) ToEntity(id TodoId) (Todo, error) {
-	return NewTodo(id, request.name)
+	return NewTodo(id, request.Name)
 }
