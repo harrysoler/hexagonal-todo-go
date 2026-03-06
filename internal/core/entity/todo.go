@@ -8,7 +8,12 @@ type Todo struct {
 	name TodoName
 }
 
-func NewTodo(id TodoId, name TodoName) (Todo, error)
+func NewTodo(id TodoId, name TodoName) (Todo, error) {
+	return Todo{
+		id:   id,
+		name: name,
+	}, nil
+}
 
 type CreateTodoRequest struct {
 	name TodoName

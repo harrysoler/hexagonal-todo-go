@@ -2,11 +2,11 @@ package main
 
 import (
 	"log/slog"
-	"net/http"
 	"os"
 
-	"github.com/go-chi/chi/v5"
-	slogchi "github.com/samber/slog-chi"
+	"dev.harrysoler/todoweb/internal/adapter/api/htmx"
+	"dev.harrysoler/todoweb/internal/adapter/repository/inmemory"
+	"dev.harrysoler/todoweb/internal/core/service"
 	"gitlab.com/greyxor/slogor"
 )
 
@@ -19,17 +19,13 @@ func main() {
 
 	slog.SetDefault(logger)
 
-	router := chi.NewRouter()
+	repository := inmemory.NewInMemoryRepository()
 
-	router.Use(slogchi.New(logger))
+	service := service.NewProjectService(repository)
 
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
-	})
+	api := htmx.NewHtmxApi(service)
 
-	slog.Info("Server started on port :4242")
-
-	err := http.ListenAndServe(":4242", router)
+	err := api.RunServer(logger)
 
 	if err != nil {
 		panic(err)
