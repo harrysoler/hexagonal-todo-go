@@ -7,6 +7,7 @@ import (
 
 var (
 	ErrProjectAlreadyExist = errors.New("project already exist")
+	ErrProjectNotFound     = errors.New("project not found")
 )
 
 type ProjectId string
@@ -25,6 +26,10 @@ func NewProject(id ProjectId, name ProjectName, todos []Todo) (Project, error) {
 		name:  name,
 		todos: todos,
 	}, nil
+}
+
+func (project Project) Id() ProjectId {
+	return project.id
 }
 
 func (project Project) Name() ProjectName {

@@ -2,6 +2,8 @@ package inmemory
 
 import (
 	"context"
+	"fmt"
+	"slices"
 
 	"dev.harrysoler/todoweb/internal/core/entity"
 )
@@ -34,4 +36,29 @@ func (repository *InMemoryRepository) IsProjectDuplicated(ctx context.Context, n
 	}
 
 	return false, nil
+}
+
+func (repository *InMemoryRepository) FindProject(ctx context.Context, id entity.ProjectId) (entity.Project, error) {
+	indexFound, err := repository.findProjectIndexById(id)
+
+	if err != nil {
+		return entity.Project{}, fmt.Errorf("find project (id %v): %w", id, err)
+	}
+
+	return repository.projects[indexFound], nil
+}
+
+func (repository *InMemoryRepository) findProjectIndexById(id entity.ProjectId) (int, error) {
+	indexFound := slices.IndexFunc(
+		repository.projects,
+		func(project entity.Project) bool {
+			return project.Id() == id
+		},
+	)
+
+	if indexFound == -1 {
+		return -1, entity.ErrProjectNotFound
+	}
+
+	return indexFound, nil
 }

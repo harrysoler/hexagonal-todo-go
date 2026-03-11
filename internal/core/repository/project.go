@@ -10,4 +10,5 @@ type ProjectRepository interface {
 	Projects(ctx context.Context) ([]entity.Project, error)
 	SaveProject(ctx context.Context, project entity.Project) error
 	IsProjectDuplicated(ctx context.Context, name entity.ProjectName) (bool, error)
+	FindProject(ctx context.Context, id entity.ProjectId) (entity.Project, error)
 }
