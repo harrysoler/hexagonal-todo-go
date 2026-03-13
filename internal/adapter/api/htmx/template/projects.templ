@@ -13,7 +13,7 @@ templ ProjectsPage(projects []entity.Project) {
       <ul>
         for _, project := range projects {
           <li>
-            { project.Name() }
+            <code>{ project.Id() }</code> { project.Name() }
           </li>
         }
       </ul>

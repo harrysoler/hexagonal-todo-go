@@ -23,6 +23,10 @@ func (service *ProjectService) Projects(ctx context.Context) ([]entity.Project, 
 	return service.repository.Projects(ctx)
 }
 
+func (service *ProjectService) FindProject(ctx context.Context, id entity.ProjectId) (entity.Project, error) {
+	return service.repository.FindProject(ctx, id)
+}
+
 func (service *ProjectService) CreateProject(ctx context.Context, request entity.CreateProjectRequest) error {
 	isProjectDuplicated, err := service.repository.IsProjectDuplicated(ctx, request.Name)
 
