@@ -39,6 +39,7 @@ func (api HtmxApi) ProjectsPage(writer http.ResponseWriter, request *http.Reques
 
 	if err != nil {
 		writer.Write([]byte(err.Error()))
+		return
 	}
 
 	component := template.ProjectsPage(projects)
@@ -53,6 +54,7 @@ func (api HtmxApi) ProjectDetailPage(writer http.ResponseWriter, request *http.R
 
 	if err != nil {
 		writer.Write([]byte(err.Error()))
+		return
 	}
 
 	component := template.ProjectDetailPage(project)
