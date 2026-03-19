@@ -1,10 +1,12 @@
 package template
 
 import "dev.harrysoler/todoweb/internal/core/entity"
+import "dev.harrysoler/todoweb/internal/adapter/api/htmx/template/component"
 
 templ ProjectDetailPage(project entity.Project) {
   <!DOCTYPE html>
   <html>
+    @component.Header(string(project.Name()) + " - Project")
     <head>
       <title>{ project.Name() } - Project</title>
     </head>

@@ -1,20 +1,19 @@
 package template
 
 import "dev.harrysoler/todoweb/internal/core/entity"
+import "dev.harrysoler/todoweb/internal/adapter/api/htmx/template/component"
 
 templ ProjectsPage(projects []entity.Project) {
   <!DOCTYPE html>
   <html>
-    <head>
-      <title>Projects</title>
-    </head>
+    @component.Header("Projects")
     <body>
       <h1>Projects</h1>
       <ul>
         for _, project := range projects {
-          <li>
+          <li><a href={"/projects/" + project.Id()}>
             <code>{ project.Id() }</code> { project.Name() }
-          </li>
+          </a></li>
         }
       </ul>
     </body>
